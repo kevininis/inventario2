@@ -1,0 +1,958 @@
+/* CSS DEL NAVBAR */
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'lemon milk';
+    box-sizing: border-box;
+}
+
+#app {
+    margin-top: 70px;
+}
+
+.navbar {
+    width: 100vw;
+    height: 70px;
+    background-color: #294f5a;
+    position: absolute;
+    top: 0;
+    left: 0;    
+    user-select: none;
+}
+
+.img-logout {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 50px !important;
+    color: #fff;
+    cursor: pointer;
+}
+
+.navbar-title {
+    display: inline-block;
+    margin-top: 15px;
+    margin-left: 15px;
+    font-size: 40px !important;
+    color: #fff;
+    cursor: pointer;
+}
+
+.nav-link {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    background-color: #040404;
+    padding: 30px;
+    width: 300px;
+    text-align: center;
+    border-bottom: 1px solid #fff;
+}
+
+.items {
+    margin-top: 12px;
+    
+}
+
+.active {
+    display: none;
+}
+
+/* CSS DEL LOGIN */
+
+.login {
+    background-color: #4c9ba2;
+    height: auto;
+    width: 400px;
+    margin: auto;
+    margin-top: 100px;
+}
+
+.login-title {
+    color: #fff;
+    font-size: 30px;
+    text-align: center;
+    display: inline-block;
+    margin-top: 20px;
+    margin-left: 150px;
+}
+
+.input-correo {
+    width: 70%;
+    height: 40px;
+    margin: 20px 55px;
+    padding-left: 20px;
+    font-size: 14px;
+    outline: none;
+    border: none;
+    font-family: helvetica;
+}
+
+::placeholder {
+    font-family: 'Helvetica';
+}
+
+.input-contrasenia {
+    width: 70%;
+    height: 40px;
+    margin: 0px 55px 20px;
+    padding-left: 20px;
+    font-size: 14px;
+    font-family: arial;
+    outline: none;
+    border: none;
+}
+
+.login-button {
+    display: inline-block;
+    margin: auto;
+    background-color: #040404;
+    color: #fff;
+    padding: 10px;
+    margin: 0 120px 20px;
+}
+
+/* CSS DEL FORMULARIO DE NUEVO USUARIO */
+
+.new-user {
+    background-color: #4c9ba2;
+    height: 500px;
+    width: 700px;
+    margin: auto;
+}
+
+.new-user--title {
+    display: inline-block;
+    margin: 50px 0px 0px 230px;
+    font-size: 30px;
+    color: #fff;
+}
+
+.new-user--input, .new-user--select {
+    display: block;
+    margin-top: 15px;
+    margin-left: 115px;
+    width: 70%;
+    height: 40px;
+    padding: 10px;
+    font-family: helvetica;
+    outline: none;
+    border: none;
+}
+
+.new-user--button {
+    display: inline-block;
+    margin: auto;
+    background-color: #040404;
+    color: #fff;
+    padding: 10px;
+    margin: 010px 300px 0px;
+}
+
+/* HOME CSS */
+
+.home {
+    user-select: none;
+}
+
+.storefront {
+    color: #040404;
+    position: absolute;
+    font-size: 200px !important;
+    top: 340px;
+    left: 360px;
+}
+
+.home-proveedores {
+    color: #040404;
+    position: absolute;
+    top: 520px;
+    left: 380px;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.shopping_cart {
+    color: #040404;
+    position: absolute;
+    font-size: 180px !important;
+    top: 350px;
+    left: 600px;
+}
+
+.home-compras {
+    color: #040404;
+    position: absolute;
+    top: 520px;
+    left: 630px;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.apps {
+    color: #040404;
+    position: absolute;
+    font-size: 230px !important;
+    top: 320px;
+    left: 802px;
+}
+
+.home-inventario {
+    color: #040404;
+    position: absolute;
+    font-size: 20px;
+    font-weight: 800;
+    top: 520px;
+    left: 850px;
+}
+
+.shopping_bag {
+    color: #040404;
+    position: absolute;
+    font-size: 210px !important;
+    top: 320px;
+    left: 1040px;
+}
+
+.home-ventas {
+    color: #040404;
+    position: absolute;
+    font-size: 20px;
+    font-weight: 800;
+    top: 520px;
+    left: 1100px;
+}
+
+.person {
+    color: #040404;
+    position: absolute;
+    font-size: 220px !important;
+    top: 330px;
+    left: 1240px;
+}
+
+.home-clientes {
+    color: #040404;
+    position: absolute;
+    font-size: 20px;
+    font-weight: 800;
+    top: 520px;
+    left: 1300px;
+}
+
+/* SIDEBAR IZQUIERDO CSS */
+
+.sidebar {
+    background-color: #4c9ba2;
+    margin-top: 10px;
+    margin-left: 20px;
+    height: 81vh;
+    width: 20vw;
+    display: inline-block;
+}
+
+.sidebar-title {
+    text-align: center;
+    padding-top: 15px;
+    color: #fff;
+}
+
+.buscar {
+    margin-left: 20px;
+    color: #fff;
+}
+
+.input-sidebar {
+    display: block;
+    width: 90%;
+    margin: 0 auto;
+    padding-left: 3px;
+    margin-top: 5px;
+    outline: none;
+    font-family: helvetica;
+}
+
+.listado-sidebar {
+    background-color: #fff;
+    width: 90%;
+    height: 60%;
+    margin: 0 auto;
+    margin-top: 10px;
+    overflow-y: scroll;
+}
+
+.listado-item {
+    border: 1px solid #4c9ba2;
+    padding-left: 3px;
+}
+
+/* CSS DEL CONTENIDO */
+
+.content {
+    position: absolute;
+    left: 22vw;
+    top: 35px;
+    padding: 30px;
+    /* background-color: #4c9ba2; */
+    width: 75vw;
+    height: 80vh;
+}
+
+.button {
+    display: inline-block;
+    font-size: 30px;
+    margin-top: 20px;
+    margin-right: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    color: #fff;
+    border: none;
+}
+
+.new-button {
+    background-color: #040404;
+    border: 1px solid #040404;
+}
+
+.new-button:hover {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+}
+
+.save-button {
+    background-color: #294f5a;
+}
+
+.save-button:hover {
+    background-color: #1d363d;
+}
+
+.modify-button {
+    background-color: #e8bb00;
+}
+
+.modify-button:hover {
+    background-color: #caa200;
+}
+
+.delete-button {
+    background-color: #d50000;
+}
+
+.delete-button:hover {
+    background-color: #a70000;
+}
+
+
+/* PROVEEDORES CSS */
+
+
+.item-content {
+    display: block;
+    font-size: 30px;
+    margin-top: 10px;
+}
+
+.input-content {
+    display: inline-block;
+    outline: none;
+    padding-left: 5px;
+    border: 1px solid black;
+    border-radius: 4px;
+    font-family: helvetica;
+}
+
+
+.lleno {
+    width: 90%;
+    height: 60px;
+    font-size: 30px;
+}
+
+.medio {
+    width: 40%;
+    height: 60px;
+    font-size: 30px;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.medio-r {  /*la r es de right */
+    margin-left: 10%;
+}
+
+.inline-r {
+    margin-left: 38%;
+    margin-right: 20%;
+}
+
+.up {
+    position: absolute;
+    display: inline-block;
+    width: 37%;
+}
+
+
+.ml {
+    padding-left: 42px;
+}
+
+.-ml {
+    margin-left: 35%;
+}
+
+.textarea-content {
+    height: 100px;
+    width: 90%;
+    font-family: helvetica;
+    outline: none;
+    border-radius: 4px;
+    padding-left: 5px;
+    font-size: 20px;
+    resize: none;
+    border: 1px solid #000;
+}
+
+.textarea-content-medio {
+    height: 100px;
+    width: 40%;
+    font-family: helvetica;
+    outline: none;
+    border-radius: 4px;
+    padding-left: 5px;
+    font-size: 20px;
+    resize: none;
+    border: 1px solid #000;
+}
+
+/* CSS DE PRODUCTOS */
+.item-productos {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.input-productos{
+    height: 30px;
+    width: 40%;
+    outline: none;
+    font-family: helvetica;
+    padding-left: 5px;
+}
+
+.input-r {
+    margin-left: 25px;
+    margin-right: 200px;
+    
+}
+
+.item-productos--barras {
+    margin-left: 35%;
+    margin-right: 28%;
+}
+
+
+.item-productos--categoria {
+    margin-left: 32%;
+    margin-right: 28%;
+}
+
+.item-productos--cantidad {
+    margin-left: 34%;
+    margin-right: 40%;
+}
+
+.input-cantidad {
+    width: 80px;
+    height: 30px;
+    outline: none;
+    text-align: center;
+    font-family: helvetica;
+}
+
+.button-productos {
+    height: 30px;
+    width: 30px;
+    background-color: #00d514;
+    border: none;
+    margin: 0 5px 0;
+}
+
+.button-productos:hover {
+    background-color: #00ac11;
+}
+
+.menos {
+    margin-left: 29px;
+    background-color: #d50000;
+}
+
+.menos:hover {
+    background-color: #a70000;
+}
+
+.item-productos-precio {
+    margin-top: 30px;
+    display: inline-block;
+}
+
+.input-precio-normal {
+    margin-left: 75px;
+    height: 30px;
+    width: 150px;
+    outline: none;
+    font-family: helvetica;
+    text-align: center;
+}
+
+.input-precio-liquidacion {
+    margin-left: 40px;
+    height: 30px;
+    width: 150px;
+    outline: none;
+    font-family: helvetica;
+    text-align: center;
+}
+
+.input-precio-mayorista {
+    margin-left: 55px;
+    height: 30px;
+    width: 150px;
+    outline: none;
+    font-family: helvetica;
+    text-align: center;
+}
+
+.input-precio-oferta {
+    margin-left: 85px;
+    height: 30px;
+    width: 150px;
+    outline: none;
+    font-family: helvetica;
+    text-align: center;
+}
+
+.new-button-productos {
+    position: absolute;
+    top: 220px;
+    left: 440px;
+    background-color: #000;
+}
+
+.new-button-productos:hover {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid black;
+}
+
+.save-button-productos {
+    position: absolute;
+    background-color: #294f5a;
+    top: 220px;
+    left: 440px;
+}
+
+.save-button-productos:hover {
+    background-color: #1d363d;
+}
+
+.modify-button-productos {
+    background-color: #e8bb00;
+    position: absolute;
+    top: 290px;
+    left: 440px;
+}
+
+.modify-button-productos:hover {
+    background-color: #caa200;
+}
+
+.delete-button-productos {
+    background-color: #d50000;
+    position: absolute;
+    top: 360px;
+    left: 440px;
+}
+
+.cancel-button-productos {
+    background-color: #d50000;
+    position: absolute;
+    top: 290px;
+    left: 440px;
+}
+
+.delete-button-productos:hover, .cancel-button-productos:hover {
+    background-color: #a70000;
+}
+
+
+@media screen and (max-width: 1400px) {
+    .inline-r {
+        margin-left: 33%;
+    }
+
+    .-ml {
+        margin-left: 29%;
+    }
+
+
+    /* CSS DEL HOME */
+    .storefront {
+        color: #040404;
+        position: absolute;
+        font-size: 200px !important;
+        top: 240px;
+        left: 150px;
+    }
+    
+    .home-proveedores {
+        color: #040404;
+        position: absolute;
+        top: 420px;
+        left: 170px;
+        font-size: 20px;
+        font-weight: 800;
+    }
+    
+    .shopping_cart {
+        color: #040404;
+        position: absolute;
+        font-size: 180px !important;
+        top: 250px;
+        left: 380px;
+    }
+    
+    .home-compras {
+        color: #040404;
+        position: absolute;
+        top: 420px;
+        left: 420px;
+        font-size: 20px;
+        font-weight: 800;
+    }
+    
+    .apps {
+        color: #040404;
+        position: absolute;
+        font-size: 230px !important;
+        top: 220px;
+        left: 550px;
+    }
+    
+    .home-inventario {
+        color: #040404;
+        position: absolute;
+        font-size: 20px;
+        font-weight: 800;
+        top: 420px;
+        left: 600px;
+    }
+    
+    .shopping_bag {
+        color: #040404;
+        position: absolute;
+        font-size: 210px !important;
+        top: 220px;
+        left: 770px;
+    }
+    
+    .home-ventas {
+        color: #040404;
+        position: absolute;
+        font-size: 20px;
+        font-weight: 800;
+        top: 420px;
+        left: 830px;
+    }
+    
+    .person {
+        color: #040404;
+        position: absolute;
+        font-size: 220px !important;
+        top: 220px;
+        left: 970px;
+    }
+    
+    .home-clientes {
+        color: #040404;
+        position: absolute;
+        font-size: 20px;
+        font-weight: 800;
+        top: 420px;
+        left: 1030px;
+    }
+
+    /* CSS DE PRODUCTOS */
+    .item-productos {
+        display: inline-block;
+        margin-top: 10px;
+        font-size: 20px;
+    }
+
+    .input-productos{
+        height: 30px;
+        width: 40%;
+        outline: none;
+        font-family: helvetica;
+        padding-left: 5px;
+    }
+
+    .input-r {
+        margin-left: 25px;
+        margin-right: 60px;
+        
+    }
+
+    .item-productos--barras {
+        margin-left: 33%;
+        margin-right: 28%;
+    }
+
+    .item-productos--categoria {
+        margin-left: 28%;
+        margin-right: 28%;
+    }
+
+    .item-productos--cantidad {
+        margin-left: 31%;
+        margin-right: 40%;
+    }
+
+    .input-cantidad {
+        width: 80px;
+        height: 30px;
+        outline: none;
+        text-align: center;
+        font-family: helvetica;
+    }
+
+    .button-productos {
+        height: 30px;
+        width: 30px;
+        background-color: #00d514;
+        border: none;
+        margin: 0 5px 0;
+    }
+
+    .button-productos:hover {
+        background-color: #00ac11;
+    }
+
+    .menos {
+        margin-left: 29px;
+        background-color: #d50000;
+    }
+
+    .menos:hover {
+        background-color: #a70000;
+    }
+
+    .item-productos-precio {
+        margin-top: 30px;
+        display: inline-block;
+    }
+
+    .input-precio-normal {
+        margin-left: 75px;
+        height: 30px;
+        width: 150px;
+        outline: none;
+        font-family: helvetica;
+        text-align: center;
+    }
+
+    .input-precio-liquidacion {
+        margin-left: 40px;
+        height: 30px;
+        width: 150px;
+        outline: none;
+        font-family: helvetica;
+        text-align: center;
+    }
+
+    .input-precio-mayorista {
+        margin-left: 55px;
+        height: 30px;
+        width: 150px;
+        outline: none;
+        font-family: helvetica;
+        text-align: center;
+    }
+
+    .input-precio-oferta {
+        margin-left: 85px;
+        height: 30px;
+        width: 150px;
+        outline: none;
+        font-family: helvetica;
+        text-align: center;
+    }
+
+    .new-button-productos {
+        position: absolute;
+        top: 220px;
+        left: 440px;
+        background-color: #000;
+    }
+
+    .new-button-productos:hover {
+        background-color: #fff;
+        color: #000;
+        border: 1px solid black;
+    }
+
+    .save-button-productos {
+        position: absolute;
+        background-color: #294f5a;
+        top: 220px;
+        left: 440px;
+    }
+
+    .save-button-productos:hover {
+        background-color: #1d363d;
+    }
+
+    .modify-button-productos {
+        background-color: #e8bb00;
+        position: absolute;
+        top: 290px;
+        left: 440px;
+    }
+
+    .modify-button-productos:hover {
+        background-color: #caa200;
+    }
+
+    .delete-button-productos {
+        background-color: #d50000;
+        position: absolute;
+        top: 360px;
+        left: 440px;
+    }
+
+    .cancel-button-productos {
+        background-color: #d50000;
+        position: absolute;
+        top: 290px;
+        left: 440px;
+    }
+
+    .delete-button-productos:hover, .cancel-button-productos:hover {
+        background-color: #a70000;
+    }
+
+    /* CSS COMPRAS */
+    .item-compras {
+        display: inline-block;
+        margin-top: 10px;
+        font-size: 20px;
+    }
+
+    .item-compras-fecha {
+        margin-left: 29%;
+        margin-right: 30%;
+    }
+
+    .item-compras-comentario {
+        margin-left: 27%;
+        margin-right: 30%;
+    }
+
+    .add-producto {
+        margin-top: 10px;
+        padding: 5px;
+        border: none;
+        background-color: #294f5a;
+        color: #fff;
+        border-radius: 4px;
+        display: inline-block;
+    }
+
+    .add-producto:hover {
+        background-color: #1d363d;
+    }
+
+    .tablaCompras {
+        height: 250px;
+    }
+
+    .table-compras {
+        margin-top: 10px;
+        width: 82.5%;
+        font-weight: 800;
+        text-align: center;
+        border: 1px solid #000;
+    }
+
+    .table-compras tbody {
+        font-weight: 100;
+        max-height: 300px;
+        border: 1px solid #000;
+    }
+    
+    .cancel-producto{
+        background-color: #d50000;
+        display: inline-block;
+        color: #fff;
+        border-radius: 4px;
+        display: inline-block;
+        margin-top: 10px;
+        margin-left: 10px;
+        padding: 5px;
+        border: none;
+    }
+
+    .SumarCompra {
+        background-color: #00d514;
+        height: 30px;
+        width: 30px;
+        border: none;
+        color: #fff;
+        border-radius: 4px;
+    }
+    .SumarCompra:hover {
+        background-color: #00ac11;
+    }
+
+    .RestarCompra {
+        background-color: #d50000;
+        height: 30px;
+        width: 30px;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+    }
+    .RestarCompra:hover {
+        background-color: #a70000;
+    }
+
+    .button-compra-save {
+        padding: 10px;
+        margin-top: 10px;
+        border: none;
+        border-radius: 4px;
+        background-color: #294f5a;
+        color: #fff;
+    }
+
+    .button-compra-save:hover {
+        background-color: #1d363d;
+    }
+
+    .button-compra-cancelar {
+        margin-left: 10px;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        background-color: #d50000;
+        color: #fff;
+    }
+
+    .button-compra-cancelar:hover {
+        background-color: #a70000;
+    }
+}
