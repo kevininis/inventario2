@@ -7,21 +7,21 @@
                 Buscar:
             </span>
 
-            <input class="input-sidebar" type="text" placeholder="# de compra">
-            <input class="input-sidebar" type="date">
-            <select class="input-sidebar">
+            <input @change="ListarCompras()" v-model="Buscar.NumeroOrden" class="input-sidebar" type="text" placeholder="# de compra">
+            <input @change="ListarCompras()" v-model="Buscar.FechaOrden" class="input-sidebar" type="date">
+            <select @change="ListarCompras()" v-model="Buscar.ProveedorOrden" class="input-sidebar">
                 <option value="">--Seleccione un proveedor--</option>
                 <option v-for="(data, index) in Proveedores" :key="index" :value="data.PR_IdProveedor">{{data.PR_NombreProveedor}}</option>
             </select>
-            <select class="input-sidebar">
+            <select @change="ListarCompras()" v-model="Buscar.EstadoOrden" class="input-sidebar">
                 <option value="">--Seleccione un estado---</option>
                 <option v-for="(data, index) in Estados" :key="index" :value="data.EST_IdEstado">{{data.EST_NombreEstado}}</option>
             </select>
             
             <div class="listado-sidebar">
-                <div class="listado-item">
+                <div @dblclick="SeleccionarCompra(data)" v-for="(data, index) in Compras" :key="index" class="listado-item">
                     <!-- aquí irían los id de las ordenes -->
-                    
+                    # {{data.OC_IdOrdenCompra}}
                 </div>
             </div>
         </div>
@@ -29,10 +29,10 @@
         <div class="content">
             <form>
                 <span class="item-compras">
-                    Proveedor
+                    Proveedor<b style="color: red">*</b>
                 </span>
                 <span class="item-compras item-compras-fecha">
-                    Fecha
+                    Fecha<b style="color: red">*</b>
                 </span>
                 <select v-model="OrdenCompra.Proveedor" class="input-productos">
                     <option value="">--Seleccione un proveedor--</option>
@@ -41,7 +41,7 @@
                 <input v-model="OrdenCompra.Fecha" class="input-productos input-r" type="date">
 
                 <span class="item-compras">
-                    Tipo de pago
+                    Tipo de pago<b style="color: red">*</b>
                 </span>
                 <span class="item-compras item-compras-comentario">
                     Comentario
@@ -52,7 +52,7 @@
                 </select>
                 <input v-model="OrdenCompra.Comentario" class="input-productos input-r" type="text">
 
-                <button @click="Modal=true" class="add-producto" type="button">Añadir producto</button>
+                <button v-show="!Modal" @click="Modal=true" class="add-producto" type="button">Añadir producto</button>
                 <button @click="Modal=false" v-show="Modal" class="cancel-producto" type="button">Cancelar</button>
                 
                 <table v-show="!Modal" class="table-compras">
@@ -63,6 +63,7 @@
                             <td>cantidad</td>
                             <td>Precio</td>
                             <td>SubTotal</td>
+                            <td></td>
                         </tr>
                     </thead>
                     <tbody>
@@ -76,8 +77,11 @@
                             </td>
                             <td>{{data.PRO_PrecioNormalProducto}}</td>
                             <td>{{parseFloat(data.SubTotal).toFixed(2)}}</td>
+                            <td>
+                                <Button @click="BorrarProducto(data.PRO_IdProducto)" type="button" class="cancel-producto">Borrar</Button>
+                            </td>
                         </tr>
-                        <tr>
+                        <tr> 
                             <td></td>
                             <td></td>
                             <td></td>
@@ -95,6 +99,7 @@
                             <td>Nombre</td>
                             <td>Disponible</td>
                             <td>Precio</td>
+                            <td></td>
                         </tr>
                     </thead>
                     <tbody>
@@ -103,11 +108,13 @@
                             <td>{{data.PRO_NombreProducto}}</td>
                             <td>{{data.PRO_CantidadProducto}}</td>
                             <td>{{data.PRO_PrecioNormalProducto}}</td>
+                            
                         </tr>
                     </tbody>
                 </table>
-                <button class="button-compra-save" type="button">Terminar</button>
-                <button class="button-compra-cancelar" type="button">Cancelar</button>
+                <button v-show="Nuevo" @click="NuevaCompra()" class="button-compra-save" type="button">Terminar</button>
+                <button v-show="!Nuevo" @click="NuevoRegistro(); Nuevo = true" class="button-compra-save" type="button">Nuevo</button>
+                <button @click="BorrarDatos()" class="button-compra-cancelar" type="button">Cancelar</button>
                 </div>
             </form>
         </div>
@@ -124,7 +131,8 @@ export default {
         this.ListarProductos();
         this.ListarProveedores();
         this.ListarEstados();
-        this.ListarTipoPago()
+        this.ListarTipoPago();
+        this.ListarCompras();
     },
     data : () => ({
         OrdenCompra : {
@@ -143,7 +151,15 @@ export default {
         TipoPago : [],
         ProductosSeleccionados : [],
         Total : 0.00,
-
+        Buscar : {
+            NumeroOrden : '',
+            FechaOrden : '',
+            ProveedorOrden : '',
+            EstadoOrden : ''
+        },
+        Compras : [],
+        DetalleCompra : '',
+        Nuevo : true
     }),
     methods : {
         printDate () {
@@ -217,12 +233,11 @@ export default {
                     data['SubTotal'] = data.PRO_PrecioNormalProducto;
                     this.ProductosSeleccionados.push(data);
                 }
-                // if(indice != -1) {
-
-                //     data['index2'] = indice;
-                //     this.ProductosSeleccionados[indice].Cantidad++;
-                //     this.CalcularSubTotal(indice);
-                // }
+                if(indice != -1) {
+                    data['index2'] = indice;
+                    this.ProductosSeleccionados[indice].Cantidad++;
+                    this.CalcularSubTotal(indice);
+                }
             }
         },
         CalcularSubTotal (Indice) {
@@ -252,6 +267,10 @@ export default {
             }
             this.CalcularSubTotal(Indice);
         },
+        BorrarProducto (id) {
+            let Producto = this.ProductosSeleccionados.findIndex(resp => resp.PRO_IdProducto == id);
+            this.ProductosSeleccionados.splice(Producto);
+        },
         CalcularTotal() {
             this.Total = 0.00;
             this.ProductosSeleccionados.forEach((Producto, Indice) => {
@@ -260,7 +279,156 @@ export default {
             })
         },
         NuevaCompra () {
-            
+            this.$swal({
+                icon: 'warning',
+                title: '¿Quieres confirmar la Compra?',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si'
+            })
+            .then((result) => {
+                if(result.isConfirmed) {
+                    if (this.OrdenCompra.Proveedor == '') {
+                        this.$swal({
+                            icon: 'error',
+                            title: 'Debes seleccionar un proveedor',
+                        });
+                    }
+                    else if (this.OrdenCompra.TipoPago == '') {
+                        this.$swal({
+                            icon: 'error',
+                            title: 'Debes seleccionar un tipo de pago',
+                        });
+                    }
+                    else if (this.ProductosSeleccionados == '') {
+                        this.$swal({
+                            icon: 'error',
+                            title: 'Debes seleccionar al menos un producto',
+                        });
+                    }
+                    else {
+                        let data = {
+                                OrdenCompra : this.OrdenCompra,
+                                Detalle : this.ProductosSeleccionados
+                                }
+
+                        axios.post('NuevaCompra', data)
+                        .then(response => {
+                            if (response.status == 201) {
+                                this.$swal({
+                                    icon: 'success',
+                                    title: 'Compra exitosa',
+                                });
+                            }
+                        })
+                        .catch(err => {
+                            this.$swal({
+                                icon: 'error',
+                                title: 'Error en la Compra',
+                            });
+                            console.log(err);
+                        })
+                        this.OrdenCompra = {
+                                Proveedor : '',
+                                TipoPago : '',
+                                Comentario : ''
+                            }
+                        this.ProductosSeleccionados = []
+                        this.printDate();
+                        this.ListarCompras();
+                    }
+                }
+            })
+        },
+        BorrarDatos () {
+            this.$swal({
+                icon: 'warning',
+                title: '¿Quieres borrar los datos?',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si'
+            })
+            .then((result) => {
+                if(result.isConfirmed) {
+                    this.OrdenCompra = {
+                        Proveedor : '',
+                        TipoPago : '',
+                        Comentario : ''
+                    }
+                    this.ProductosSeleccionados = []
+                    this.printDate();
+                }
+            })
+        },
+        ListarCompras () {
+            axios.post('ListarCompras', this.Buscar)
+            .then(response => {
+                if (response.status == 200) {
+                    this.Compras = response.data.Compras
+                }
+            })
+            .catch(err => {
+                this.$swal({
+                    icon: 'error',
+                    title: 'Error en al listar las compras',
+                });
+            })
+        },
+        SeleccionarCompra (data) {
+            this.Nuevo = false;
+            this.OrdenCompra = {
+                Proveedor : '',
+                TipoPago : '',
+                Comentario : ''
+            }
+            this.ProductosSeleccionados = []
+            this.printDate();
+
+
+            this.OrdenCompra.Proveedor = data.OC_IdProveedor;
+            this.OrdenCompra.Fecha = data.OC_Fecha;
+            this.OrdenCompra.TipoPago = data.OC_IdTipoPago;
+            this.OrdenCompra.Comentario = data.OC_Comentario;
+
+            let id = {id : data.OC_IdOrdenCompra}
+            axios.post('DetalleCompra', id)
+            .then(response => {
+                if (response.status == 200) {
+                    response.data.Detalle.forEach(resp => {
+                        let data = {
+                            PRO_IdProducto : resp.producto.PRO_IdProducto,
+                            PRO_NombreProducto : resp.producto.PRO_NombreProducto,
+                            PRO_PrecioNormalProducto : resp.producto.PRO_PrecioNormalProducto,
+                            Cantidad : resp.DC_Cantidad 
+                        }
+                        this.ProductosSeleccionados.push(data);
+                        let indice = this.ProductosSeleccionados.findIndex(resp => resp.PRO_IdProducto == resp.PRO_IdProducto);
+                        this.CalcularSubTotal(indice);
+                        this.CalcularTotal();
+                    })
+                    
+                }
+            })
+            .catch(err => {
+                this.$swal({
+                    icon: 'error',
+                    title: 'Error en al seleccionar compra',
+                    text : err
+                });
+                console.log(err);
+            })
+        },
+        NuevoRegistro() {
+            this.Nuevo = true;
+            this.OrdenCompra = {
+                Proveedor : '',
+                TipoPago : '',
+                Comentario : ''
+            }
+            this.ProductosSeleccionados = []
+            this.printDate();
         }
     }
 

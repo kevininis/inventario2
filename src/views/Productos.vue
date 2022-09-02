@@ -28,7 +28,7 @@
             <div class="content-content">
                 <form @submit.prevent="NuevoProducto()">
                     <span class="item-productos">
-                        Nombre
+                        Nombre<b style="color: red">*</b>
                     </span>
                     <span class="item-productos item-productos--barras">
                         Código de Barras
@@ -40,7 +40,7 @@
                         Descripción
                     </span>
                     <span class="item-productos item-productos--categoria">
-                        Categoría
+                        Categoría<b style="color: red">*</b>
                     </span>
                     <input v-model="Producto.Descripcion" class="input-productos" type="text" :disabled="Disabled ? true : false">
                     <select v-model="Producto.Categoria" class="input-productos input-r" :disabled="Disabled ? true : false" required>
@@ -49,10 +49,10 @@
                     </select>
 
                     <span class="item-productos">
-                        Ubicación
+                        Ubicación<b style="color: red">*</b>
                     </span>
                     <span class="item-productos item-productos--cantidad">
-                        Cantidad
+                        Cantidad<b style="color: red">*</b>
                     </span>
                     <select v-model="Producto.Ubicacion" class="input-productos" :disabled="Disabled ? true : false" required>
                         <option value="">---Seleccione una ubicación---</option>
@@ -67,7 +67,7 @@
                     <br>
 
                     <span class="item-productos-precio">
-                        Precio Normal
+                        Precio Normal<b style="color: red">*</b>
                     </span>
                     <input v-model="Producto.PrecioNormal" class="input-precio-normal" type="number" step="any" :disabled="Disabled ? true : false" required>
 

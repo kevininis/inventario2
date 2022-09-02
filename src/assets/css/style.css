@@ -285,6 +285,7 @@
 .listado-item {
     border: 1px solid #4c9ba2;
     padding-left: 3px;
+    cursor: pointer;
 }
 
 /* CSS DEL CONTENIDO */
@@ -584,11 +585,122 @@
     top: 290px;
     left: 440px;
 }
-
+ 
 .delete-button-productos:hover, .cancel-button-productos:hover {
     background-color: #a70000;
 }
 
+/* CSS COMPRAS */
+.item-compras {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.item-compras-fecha {
+    margin-left: 32%;
+    margin-right: 30%;
+}
+
+.item-compras-comentario {
+    margin-left: 31%;
+    margin-right: 30%;
+}
+
+.add-producto {
+    margin-top: 10px;
+    padding: 5px;
+    border: none;
+    background-color: #294f5a;
+    color: #fff;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.add-producto:hover {
+    background-color: #1d363d;
+}
+
+.tablaCompras {
+    height: 250px;
+}
+
+.table-compras {
+    margin-top: 10px;
+    width: 82.5%;
+    font-weight: 800;
+    text-align: center;
+    border: 1px solid #000;
+}
+
+.table-compras tbody {
+    font-weight: 100;
+    max-height: 300px;
+    border: 1px solid #000;
+    cursor: pointer;
+}
+
+.cancel-producto{
+    background-color: #d50000;
+    display: inline-block;
+    color: #fff;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 10px;
+    padding: 5px;
+    border: none;
+}
+
+.SumarCompra {
+    background-color: #00d514;
+    height: 30px;
+    width: 30px;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+}
+.SumarCompra:hover {
+    background-color: #00ac11;
+}
+
+.RestarCompra {
+    background-color: #d50000;
+    height: 30px;
+    width: 30px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+}
+.RestarCompra:hover {
+    background-color: #a70000;
+}
+
+.button-compra-save {
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #294f5a;
+    color: #fff;
+}
+
+.button-compra-save:hover {
+    background-color: #1d363d;
+}
+
+.button-compra-cancelar {
+    margin-left: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #d50000;
+    color: #fff;
+}
+
+.button-compra-cancelar:hover {
+    background-color: #a70000;
+}
 
 @media screen and (max-width: 1400px) {
     .inline-r {
