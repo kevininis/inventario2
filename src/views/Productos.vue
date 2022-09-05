@@ -19,7 +19,7 @@
             <div class="listado-sidebar">
                 <div @dblclick="SeleccionarProducto(data); AsignarProductoSeleccionado(data)" v-for="(data, index) in Productos" :key="index" class="listado-item">
                     <!-- aquí irían los id de los Productos -->
-                    {{data.PRO_IdProducto}} {{data.PRO_NombreProducto}}
+                    {{data.PRO_NombreProducto}}
                 </div>
             </div>
         </div> 

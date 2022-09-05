@@ -14,7 +14,7 @@
             <div class="listado-sidebar">
                 <div v-for="(data, index) in Proveedores" :key="index" @dblclick="SeleccionarProveedor(data); AsignarProveedorSeleccionado(data)" class="listado-item">
                     <!-- aquí irían los id de los proveedores -->
-                    {{data.PR_IdProveedor}} {{data.PR_NombreProveedor}}
+                    {{data.PR_NombreProveedor}}
                 </div>
             </div>
         </div>
@@ -205,6 +205,7 @@ export default {
             this.$swal({
                 icon: 'warning',
                 title: '¿Está seguro que quieres eliminar este proveedor',
+                text : 'Si borras este proveedor también se borrarán los registros de ventas en los que aparezca',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',

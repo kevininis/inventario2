@@ -15,7 +15,7 @@
             <div class="listado-sidebar">
                 <div v-for="(data, index) in Clientes" :key="index" @dblclick="SeleccionarCliente(data); AsignarClienteSeleccionado(data)" class="listado-item">
                     <!-- aquí irían los id de los clientes -->
-                    {{data.CL_IdCliente}} {{data.CL_NombreCliente}}
+                    {{data.CL_NombreCliente}}
                 </div>
             </div>
         </div>  
@@ -221,8 +221,9 @@ export default {
         EliminarCliente () {
             this.$swal({
                 icon: 'warning',
-                title: '¿Está seguro que quieres eliminar este Cliente',
-                showCancelButton: true,
+                title: '¿Está seguro?',
+                text : 'Si borras este cliente también se borrarán los registros de ventas en los que aparezca',
+                showCancelButton: true, 
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Si'

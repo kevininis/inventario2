@@ -702,6 +702,18 @@
     background-color: #a70000;
 }
 
+.button-compra-modificar {
+    margin-left: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #e8bb00;
+}
+
+.button-compra-modificar:hover {
+    background-color: #caa200;
+}
 @media screen and (max-width: 1400px) {
     .inline-r {
         margin-left: 33%;

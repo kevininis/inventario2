@@ -34,11 +34,11 @@
                 <span class="item-compras item-compras-fecha">
                     Fecha<b style="color: red">*</b>
                 </span>
-                <select v-model="OrdenCompra.Proveedor" class="input-productos">
+                <select v-model="OrdenCompra.Proveedor" class="input-productos" :disabled="!Disabled ? true : false">
                     <option value="">--Seleccione un proveedor--</option>
                     <option v-for="(data, index) in Proveedores" :key="index" :value="data.PR_IdProveedor">{{data.PR_NombreProveedor}}</option>
                 </select>
-                <input v-model="OrdenCompra.Fecha" class="input-productos input-r" type="date">
+                <input v-model="OrdenCompra.Fecha" class="input-productos input-r" type="date" :disabled="!Disabled ? true : false">
 
                 <span class="item-compras">
                     Tipo de pago<b style="color: red">*</b>
@@ -46,13 +46,13 @@
                 <span class="item-compras item-compras-comentario">
                     Comentario
                 </span>
-                <select v-model="OrdenCompra.TipoPago" class="input-productos">
+                <select v-model="OrdenCompra.TipoPago" class="input-productos" :disabled="!Disabled ? true : false">
                     <option value="">--Seleccione un tipo de pago--</option>
                     <option v-for="(data, index) in TipoPago" :key="index" :value="data.TP_IdTipoPago">{{data.TP_NombreTipoPago}}</option>
                 </select>
-                <input v-model="OrdenCompra.Comentario" class="input-productos input-r" type="text">
+                <input v-model="OrdenCompra.Comentario" class="input-productos input-r" type="text" :disabled="!Disabled ? true : false">
 
-                <button v-show="!Modal" @click="Modal=true" class="add-producto" type="button">Añadir producto</button>
+                <button v-show="!Modal" @click="Modal=true" class="add-producto" type="button" :disabled="!Disabled ? true : false">Añadir producto</button>
                 <button @click="Modal=false" v-show="Modal" class="cancel-producto" type="button">Cancelar</button>
                 
                 <table v-show="!Modal" class="table-compras">
@@ -71,14 +71,14 @@
                             <td>{{index+1}}</td>
                             <td>{{data.PRO_NombreProducto}}</td>
                             <td>
-                                <button @click="Restar(index)" class="RestarCompra" type="button">-</button>
+                                <button @click="Restar(index)" class="RestarCompra" type="button" :disabled="!Disabled ? true : false">-</button>
                                 {{data.Cantidad}}
-                                <button @click="Sumar(index, data)" class="SumarCompra" type="button">+</button>    
+                                <button @click="Sumar(index, data)" class="SumarCompra" type="button" :disabled="!Disabled ? true : false">+</button>    
                             </td>
                             <td>{{data.PRO_PrecioNormalProducto}}</td>
                             <td>{{parseFloat(data.SubTotal).toFixed(2)}}</td>
                             <td>
-                                <Button @click="BorrarProducto(data.PRO_IdProducto)" type="button" class="cancel-producto">Borrar</Button>
+                                <Button @click="BorrarProducto(data.PRO_IdProducto)" type="button" class="cancel-producto" :disabled="!Disabled ? true : false">Borrar</Button>
                             </td>
                         </tr>
                         <tr> 
@@ -113,8 +113,13 @@
                     </tbody>
                 </table>
                 <button v-show="Nuevo" @click="NuevaCompra()" class="button-compra-save" type="button">Terminar</button>
-                <button v-show="!Nuevo" @click="NuevoRegistro(); Nuevo = true" class="button-compra-save" type="button">Nuevo</button>
-                <button @click="BorrarDatos()" class="button-compra-cancelar" type="button">Cancelar</button>
+                <button v-show="Modificar" @click="GuardarModificacion()" class="button-compra-save" type="button">Guardar Modificación</button>
+                <button v-show="!Nuevo&&!Modificar" @click="NuevoRegistro(); Nuevo = true; Disabled = true" class="button-compra-save" type="button">Nuevo</button>
+                <button v-show="!Modificar" @click="Disabled = true; ModificarCompra()" class="button-compra-modificar" type="button" :disabled="Disabled ? true : false">MODIFICAR</button>
+                <button v-show="Modificar" @click="Modificar = false; nuevo = false" class="button-compra-cancelar" type="button">Cancelar</button>
+                <button v-show="!Modificar" @click="BorrarDatos(); Modificar = false" class="button-compra-cancelar" type="button">Cancelar</button>
+                <button v-show="Modificar" @click="EliminarCompra()" class="button-compra-cancelar" type="button">Eliminar Venta</button>
+
                 </div>
             </form>
         </div>
@@ -136,6 +141,7 @@ export default {
     },
     data : () => ({
         OrdenCompra : {
+            Id : '',
             Proveedor : '',
             Fecha : '',
             TipoPago : '',
@@ -150,6 +156,7 @@ export default {
         Estados : [],
         TipoPago : [],
         ProductosSeleccionados : [],
+        ProductosBorrados : [],
         Total : 0.00,
         Buscar : {
             NumeroOrden : '',
@@ -159,7 +166,10 @@ export default {
         },
         Compras : [],
         DetalleCompra : '',
-        Nuevo : true
+        Nuevo : true,
+        Disabled : true,
+        Modificar : false,
+        ProductosNuevos : []
     }),
     methods : {
         printDate () {
@@ -227,33 +237,26 @@ export default {
         SeleccionarProducto (data) {
             let codProducto = data.PRO_IdProducto;
             let indice = this.ProductosSeleccionados.findIndex(resp => resp.PRO_IdProducto == codProducto);
-            if(data.PRO_CantidadProducto != 0) {
                 if(indice == -1) {
                     data['Cantidad'] = 1;
                     data['SubTotal'] = data.PRO_PrecioNormalProducto;
                     this.ProductosSeleccionados.push(data);
+                    data['Id'] = null;
+                    this.ProductosNuevos.push(data);
                 }
                 if(indice != -1) {
                     data['index2'] = indice;
                     this.ProductosSeleccionados[indice].Cantidad++;
                     this.CalcularSubTotal(indice);
+                    this.ProductosNuevos[indice].Cantidad++;
                 }
-            }
         },
         CalcularSubTotal (Indice) {
             this.ProductosSeleccionados[Indice].SubTotal = this.ProductosSeleccionados[Indice].PRO_PrecioNormalProducto * this.ProductosSeleccionados[Indice].Cantidad
             this.CalcularTotal();
         },
-        Sumar (Indice, data) {
-            let Cantidad = this.Productos[this.Productos.findIndex(resp => resp.PRO_IdProducto == data.PRO_IdProducto)].PRO_CantidadProducto;
-            if (this.ProductosSeleccionados[Indice].Cantidad < this.Productos[this.Productos.findIndex(resp => resp.PRO_IdProducto == data.PRO_IdProducto)].PRO_CantidadProducto) {
-                this.ProductosSeleccionados[Indice].Cantidad++; 
-            } else {
-                this.$swal({
-                    icon: 'error',
-                    title: 'Solo tienes ' + Cantidad,
-                });
-            }
+        Sumar (Indice) {
+            this.ProductosSeleccionados[Indice].Cantidad++; 
             this.CalcularSubTotal(Indice);
         },
         Restar (Indice) {
@@ -269,13 +272,41 @@ export default {
         },
         BorrarProducto (id) {
             let Producto = this.ProductosSeleccionados.findIndex(resp => resp.PRO_IdProducto == id);
-            this.ProductosSeleccionados.splice(Producto);
+            let ProductoBorrado = this.ProductosSeleccionados[Producto];
+            this.ProductosSeleccionados.splice(Producto, 1);
+            this.ProductosBorrados.push(ProductoBorrado);
         },
         CalcularTotal() {
             this.Total = 0.00;
             this.ProductosSeleccionados.forEach((Producto, Indice) => {
                 Producto.index = Indice;
                 this.Total = parseFloat(this.Total) + parseFloat(Producto.SubTotal);
+            })
+        },
+        BorrarDatos () {
+            this.$swal({
+                icon: 'warning',
+                title: '¿Quieres borrar los datos?',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si'
+            })
+            .then((result) => {
+                if(result.isConfirmed) {
+                    this.OrdenCompra = {
+                        Id : '',
+                        Proveedor : '',
+                        Fecha : '',
+                        TipoPago : '',
+                        Comentario : ''
+                    },
+                    this.ProductosSeleccionados = []
+                    this.printDate();
+                    this.Modal = false;
+                    this.Nuevo = true;
+                    this.Disabled = true;
+                }
             })
         },
         NuevaCompra () {
@@ -330,6 +361,7 @@ export default {
                             console.log(err);
                         })
                         this.OrdenCompra = {
+                                Id : '',
                                 Proveedor : '',
                                 TipoPago : '',
                                 Comentario : ''
@@ -359,6 +391,7 @@ export default {
                     }
                     this.ProductosSeleccionados = []
                     this.printDate();
+                    this.Disabled = true;
                 }
             })
         },
@@ -377,16 +410,22 @@ export default {
             })
         },
         SeleccionarCompra (data) {
+            this.ProductosBorrados = [];
+            this.ProductosNuevos = [];
             this.Nuevo = false;
             this.OrdenCompra = {
+                Id : '',
                 Proveedor : '',
                 TipoPago : '',
                 Comentario : ''
             }
             this.ProductosSeleccionados = []
             this.printDate();
+            this.Disabled = false;
+            this.Modificar = false;
 
 
+            this.OrdenCompra.Id = data.OC_IdOrdenCompra;
             this.OrdenCompra.Proveedor = data.OC_IdProveedor;
             this.OrdenCompra.Fecha = data.OC_Fecha;
             this.OrdenCompra.TipoPago = data.OC_IdTipoPago;
@@ -398,6 +437,7 @@ export default {
                 if (response.status == 200) {
                     response.data.Detalle.forEach(resp => {
                         let data = {
+                            Id : resp.DC_IdDetalleCompra,   
                             PRO_IdProducto : resp.producto.PRO_IdProducto,
                             PRO_NombreProducto : resp.producto.PRO_NombreProducto,
                             PRO_PrecioNormalProducto : resp.producto.PRO_PrecioNormalProducto,
@@ -423,12 +463,134 @@ export default {
         NuevoRegistro() {
             this.Nuevo = true;
             this.OrdenCompra = {
+                Id: '',
                 Proveedor : '',
                 TipoPago : '',
                 Comentario : ''
             }
             this.ProductosSeleccionados = []
             this.printDate();
+        },
+        ModificarCompra () {
+            if (this.Modificar == false) {
+                this.Modificar = true;
+
+            } else {
+                this.Modificar = false;
+
+            }
+        },
+        GuardarModificacion() {
+            let data = {
+                OrdenCompra : this.OrdenCompra,
+                Detalle : this.ProductosSeleccionados,
+                Borrados : this.ProductosBorrados,
+                Nuevos : this.ProductosNuevos
+            }
+            axios.post('ModificarCompra', data)
+            .then(response => {
+                if (response.status == 200) {
+                    this.$swal({
+                        icon: 'success',
+                        title: response.data.message,
+                    });
+                }
+                this.ListarCompras();
+                this.ListarProductos();
+                this.ProductosBorrados = [];
+                this.ProductosNuevos = [];
+                this.Modificar = false;
+                this.Disabled = false;
+                
+                axios.post('DetalleCompra', {Id : this.OrdenCompra.Id})
+                .then(response => {
+                    if (response.status == 200) {
+                        let detalles = [];
+                        response.data.Detalle.forEach(resp => {
+                            let data = {
+                                Id : resp.DV_DetalleVenta,
+                                PRO_IdProducto : resp.producto.PRO_IdProducto,
+                                PRO_NombreProducto : resp.producto.PRO_NombreProducto,
+                                PRO_PrecioNormalProducto : resp.producto.PRO_PrecioNormalProducto,
+                                Cantidad : resp.DV_Cantidad 
+                            }
+                            detalles.push(data);
+                            this.ProductosSeleccionados = detalles;
+                            let indice = this.ProductosSeleccionados.findIndex(res => res.PRO_IdProducto ==resp.PRO_IdProducto);
+                            this.CalcularSubTotal(indice);
+                        })
+                        this.Disabled = false; 
+                        this.ProductosBorrados = [];
+                        this.ProductosNuevos = [];
+                        this.ListarProductos();
+                    }
+                })
+                .catch(err => {
+                    this.$swal({
+                        icon: 'error',
+                        title: err.response.data.message,
+                    });
+                })
+            })
+            .catch(err => {
+                this.$swal({
+                    icon: 'error',
+                    title: 'error',
+                    text: err.response.data.message,
+                });
+            })
+        },
+        EliminarCompra() {
+            this.$swal({
+                icon: 'warning',
+                title: '¿Quieres eliminar la compra?',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si'
+            })
+            .then((result) => {
+                if(result.isConfirmed) {
+
+                    let data = {
+                        IdVenta : this.OrdenCompra.Id,
+                        DetalleCompra : this.ProductosSeleccionados,
+
+                    }
+                    axios.post('EliminarCompra', data)
+                    .then(response => {
+                        if (response.status == 200) {
+                            this.$swal({
+                                icon: 'success',
+                                title: 'Venta eliminada correctamente',
+                            });
+                            this.ListarCompras();
+                            this.ListarProductos();
+                            this.ProductosBorrados = [];
+                            this.ProductosNuevos = [];
+                            this.Modificar = false;
+                            this.Disabled = true;
+                            this.Nuevo = true;
+                            this.OrdenCompra = {
+                                Id : '',
+                                Proveedor : '',
+                                TipoPago : '',
+                                Comentario : ''
+                            }
+                            this.ProductosSeleccionados = []
+                            this.printDate();
+                        }
+                    })
+                    .catch(err => {
+                        this.$swal({
+                            icon: 'error',
+                            title: 'Error en al eliminar la venta',
+                            text : err
+                        });
+                        console.log(err);
+                    })
+                }
+            })
         }
     }
 
